@@ -1,19 +1,13 @@
 configure_dock() {
   local dock_items=(
-    "/System/Applications/Calendar.app"
-    "/System/Applications/Notes.app"
-    "/Applications/Google Chrome.app"
-    "/Applications/Warp.app"
-    "/Applications/Cursor.app"
+    "/Applications/Microsoft Outlook.app"
+    "/Applications/Microsoft Teams.app"
+    "/Applications/Arc.app"
+    "/Applications/Ghostty.app"
+    "/Applications/Visual Studio Code.app"
     "/Applications/GitHub Desktop.app"
-    "/Applications/Typefully.app"
-    "/Applications/Slack.app"
-    "/Applications/Spark Desktop.app"
-    "/Applications/Signal.app"
-    "/Applications/Discord.app"
-    "/System/Applications/Messages.app"
-    "/Applications/ChatGPT.app"
-    "/Applications/Codex.app"
+    "/Applications/Figma.app"
+    "/Applications/IA Writer.app"
   )
 
   if ! command -v dockutil >/dev/null 2>&1; then

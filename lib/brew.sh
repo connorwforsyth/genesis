@@ -1,15 +1,11 @@
 install_brew_libs() {
   local brew_libs=(
-    "btop"
-    "oven-sh/bun/bun"
     "dockutil"
-    "ffmpeg"
     "gh"
-    "git"
-    "git-lfs"
     "mas"
-    "pnpm"
-    "stripe"
+    "anomalyco/tap/opencode"
+    "oven-sh/bun/bun"
+    "8ta4/extension/extension"
   )
 
   local tool

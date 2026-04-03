@@ -4,18 +4,9 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-source "${SCRIPT_DIR}/lib/setup.sh"
-source "${SCRIPT_DIR}/lib/nvm.sh"
-source "${SCRIPT_DIR}/lib/brew.sh"
-source "${SCRIPT_DIR}/lib/fonts.sh"
-source "${SCRIPT_DIR}/lib/casks.sh"
-source "${SCRIPT_DIR}/lib/mas.sh"
-source "${SCRIPT_DIR}/lib/npm.sh"
-source "${SCRIPT_DIR}/lib/skills.sh"
-source "${SCRIPT_DIR}/lib/cursor.sh"
-source "${SCRIPT_DIR}/lib/dock.sh"
-source "${SCRIPT_DIR}/lib/postflight.sh"
-source "${SCRIPT_DIR}/lib/zshrc.sh"
+for script in "${SCRIPT_DIR}/lib/"*.sh; do
+  source "$script"
+done
 
 main() {
   ensure_macos
@@ -25,12 +16,26 @@ main() {
   install_fonts
   install_brew_casks
   install_mas_apps
-  install_npm_packages
-  install_skills
-  install_cursor_extensions
   configure_dock
-  configure_zshrc
-  print_postflight_steps
+  configure_zsh "${SCRIPT_DIR}"
+  configure_macos
+  install_vscode_extensions
+  configure_vscode_settings
+  configure_ghostty
+  install_browser_extensions
 }
 
-main "$@"
+# If you pass function names as args, call those instead of main
+if [[ $# -gt 0 ]]; then
+  for cmd in "$@"; do
+    if declare -f "$cmd" > /dev/null; then
+      echo "Running ${cmd}..."
+      "$cmd"
+    else
+      echo "No such task: $cmd"
+      exit 1
+    fi
+  done
+else
+  main
+fi

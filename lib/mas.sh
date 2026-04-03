@@ -1,12 +1,6 @@
 install_mas_apps() {
   local mas_apps=(
-    "411643860" # DaisyDisk
-    "424389933" # FinalCutPro
-    "1358823008" # Flighty
-    "1502839586" # HandMirror
-    "6446206067" # Klack
-    "1532801185" # MyMind
-    "897118787" # Shazam
+    "775737590" # iA Writer
   )
 
   if ! command -v mas >/dev/null 2>&1; then

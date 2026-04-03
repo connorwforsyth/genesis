@@ -3,6 +3,10 @@ install_fonts() {
     "font-geist"
     "font-geist-mono"
     "font-inter"
+    "font-open-sans"
+    "font-sf-pro"
+    "font-new-york"
+    "font-jetbrains-mono"
   )
 
   local font_cask

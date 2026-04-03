@@ -1,31 +1,17 @@
 install_brew_casks() {
   local brew_casks=(
-    "1password-cli"
-    "1password"
     "arc"
-    "chatgpt"
     "cleanshot"
-    "codex"
-    "codex-app"
-    "cursor"
-    "cursor-cli"
-    "discord"
+    "pixelsnap"
     "figma"
+    "visual-studio-code"
     "github"
-    "google-chrome"
-    "imageoptim"
-    "nordvpn"
     "notion"
-    "pitch"
-    "readdle-spark"
     "screen-studio"
-    "signal"
     "slack"
     "spotify"
-    "typefully"
-    "warp"
-    "whatsapp"
-    "zoom"
+    "raycast"
+    "ghostty"
   )
 
   local cask
@@ -35,6 +21,16 @@ install_brew_casks() {
       continue
     fi
 
-    brew install --cask "${cask}"
+    if brew install --cask "${cask}" 2>/dev/null; then
+      continue
+    fi
+
+    # Install failed - app may exist outside Homebrew, prompt to take ownership
+    read -r -p "${cask} is already installed outside Homebrew. Adopt it? [y/N] " response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+      brew install --cask --force "${cask}"
+    else
+      echo "Skipping ${cask}"
+    fi
   done
 }
