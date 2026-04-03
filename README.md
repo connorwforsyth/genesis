@@ -1,6 +1,6 @@
 # Genesis
 
-Personal macOS bootstrap script for setting up a new machine with Homebrew, Node.js, fonts, App Store apps, VS Code extensions, macOS system preferences, Ghostty terminal config, browser extensions, and a preferred Dock layout.
+Personal macOS bootstrap script for setting up a new machine with Homebrew, Node.js, fonts, App Store apps, VS Code extensions, macOS system preferences, Ghostty terminal config, browser extensions, and a preferred Dock layout. Forked from [Hayden Bleasel](https://github.com/haydenbleasel/genesis).
 
 ## Usage
 
