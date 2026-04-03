@@ -23,6 +23,16 @@ bash ./init.sh configure_dock
 bash ./init.sh configure_macos configure_ghostty
 ```
 
+### genesis CLI
+
+After the first run, a `genesis` shell function is registered in `~/.zshrc`. From any new terminal session you can rerun the full bootstrap or any individual step without needing to reference the script path:
+
+```bash
+genesis
+genesis configure_dock
+genesis configure_macos configure_ghostty
+```
+
 The script is designed to be rerun. It skips installed Homebrew formulae, casks, and App Store apps when possible.
 
 ## What it does
