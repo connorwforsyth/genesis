@@ -44,6 +44,9 @@ configure_macos() {
       >/dev/null 2>&1 || echo "Unable to set wallpaper; set it from ${wallpaper}"
   fi
 
+  # Photos - don't open when an iPhone or camera is plugged in
+  defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
+
   # Trackpad and mouse - disable natural scrolling
   defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 

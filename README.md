@@ -54,7 +54,7 @@ The script is designed to be rerun. It skips installed Homebrew formulae, casks,
 - Creates `~/Code` for projects outside Conductor and T3 Code via [`lib/folders.sh`](lib/folders.sh)
 - Configures the Dock order listed in [`lib/dock.sh`](lib/dock.sh)
 - Updates `.zprofile` and `.zshrc` using [`lib/zsh.sh`](lib/zsh.sh), adding Homebrew, `~/.local/bin` and the VS Code `code` CLI to `$PATH`, a full-path prompt, `autocd`, case-insensitive tab completion, `BIOME_THREADS=2`, and a `genesis` shell function so you can rerun the script from any terminal
-- Applies macOS system preferences via [`lib/macos.sh`](lib/macos.sh): Dock auto-hide, desktop widgets hidden, the Raycast Glaze 2 wallpaper, Finder path/status bars, Spotlight disabled (Raycast), natural scrolling off, minimize into app icon, and no `.DS_Store` on network or USB volumes
+- Applies macOS system preferences via [`lib/macos.sh`](lib/macos.sh): Dock auto-hide, desktop widgets hidden, the Raycast Glaze 2 wallpaper, Photos not opening when an iPhone is plugged in, Finder path/status bars, Spotlight disabled (Raycast), natural scrolling off, minimize into app icon, and no `.DS_Store` on network or USB volumes
 - Adds MCP servers (Mobbin, Neon, Agentation, REA) to Claude Code and Codex via [`lib/mcp.sh`](lib/mcp.sh)
 - Installs global agent skills for Claude Code and Codex via [`lib/skills.sh`](lib/skills.sh), including the private `connorwforsyth/skills` repo
 - Installs VS Code extensions using [`lib/code.sh`](lib/code.sh) and prompts to uninstall any extensions not in the list
