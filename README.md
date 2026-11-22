@@ -4,13 +4,19 @@ Personal macOS bootstrap script for setting up a new machine with Homebrew, Node
 
 ## Usage
 
-On a fresh Mac, run it straight from GitHub. No git or clone needed:
+### On a fresh Mac
+
+Run it straight from GitHub. No git or clone needed:
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/connorwforsyth/genesis/main/bootstrap.sh)"
 ```
 
 This downloads the repo to `~/.genesis` and runs it. Running the same command again fetches the latest version. To run individual steps, add them after `--`: `bash -c "$(curl ...)" -- configure_dock`.
+
+Use `bash -c "$(curl ...)"` rather than `curl ... | bash`: piping the script in would stop Genesis's yes/no prompts from reading your answers.
+
+### From a clone
 
 Run the script from anywhere:
 
