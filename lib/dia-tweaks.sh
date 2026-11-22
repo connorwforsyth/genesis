@@ -6,7 +6,8 @@ install_dia_tweaks() {
     return
   fi
 
-  if command -v diatweaks >/dev/null 2>&1; then
+  # diapatch is always installed; the diatweaks command only when Rust is available
+  if [[ -x "$HOME/Library/Application Support/DiaPatches/bin/diapatch" ]] || command -v diatweaks >/dev/null 2>&1; then
     echo "Skipping DiaTweaks; already installed (update with 'diatweaks update')"
     return
   fi
@@ -17,7 +18,8 @@ install_dia_tweaks() {
   fi
 
   echo "DiaTweaks (github.com/JaceThings/DiaTweaks) is unofficial. It re-signs Dia locally and"
-  echo "turns off Dia's own updater, handling updates itself."
+  echo "turns off Dia's own updater, handling updates itself. Its install builds quietly for a"
+  echo "few minutes, then macOS asks for your password (the dialog can hide behind Terminal)."
   if ! confirm "Install DiaTweaks?"; then
     echo "Skipping DiaTweaks"
     return
