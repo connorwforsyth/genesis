@@ -20,6 +20,7 @@ install_browser_extensions() {
     fi
 
     echo "Opening ${name} in Dia; click Add to Dia"
-    open -a Dia "https://chromewebstore.google.com/detail/${id}"
+    open -a "/Applications/Dia.app" "https://chromewebstore.google.com/detail/${id}" \
+      || echo "Add ${name} from https://chromewebstore.google.com/detail/${id}"
   done
 }

@@ -40,6 +40,11 @@ install_app() {
   return 1
 }
 
+# Open a just-installed app by path: macOS may not know it by name yet. Never stops the run
+open_app() {
+  open "${GENESIS_APPS_DIR:-/Applications}/$1.app" 2>/dev/null || echo "Open $1 from Applications to finish setup"
+}
+
 unpack_archive() {
   local archive
   archive="$(find "$1" -maxdepth 1 \( -name '*.zip' -o -name '*.dmg' \) -print -quit)"
@@ -73,7 +78,7 @@ fetch_window_management() {
 
 install_window_management() {
   install_app "Window Management+" fetch_window_management || return 0
-  open -a "Window Management+"
+  open_app "Window Management+"
   echo "Grant Window Management+ Accessibility access from its menu bar icon"
 }
 
@@ -85,6 +90,6 @@ fetch_ruler() {
 
 install_ruler() {
   install_app "Ruler" fetch_ruler || return 0
-  open -a "Ruler"
+  open_app "Ruler"
   echo "Ruler asks for Screen Recording the first time you measure; allow it, then relaunch Ruler"
 }
