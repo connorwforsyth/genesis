@@ -31,9 +31,8 @@ install_brew_casks() {
     fi
 
     # Install failed - app may exist outside Homebrew, prompt to take ownership
-    read -r -p "${cask} is already installed outside Homebrew. Adopt it? [y/N] " response
-    if [[ "$response" =~ ^[Yy]$ ]]; then
-      brew install --cask --force "${cask}"
+    if confirm "${cask} is already installed outside Homebrew. Adopt it?"; then
+      brew install --cask --force "${cask}" || echo "Unable to install ${cask}"
     else
       echo "Skipping ${cask}"
     fi

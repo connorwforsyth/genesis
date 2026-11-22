@@ -51,8 +51,7 @@ install_vscode_extensions() {
     for ext in "${to_uninstall[@]}"; do
       echo "  - ${ext}"
     done
-    read -r -p "Proceed? [y/N] " confirm
-    if [[ "$(echo "${confirm}" | tr '[:upper:]' '[:lower:]')" == "y" ]]; then
+    if confirm "Proceed?"; then
       for ext in "${to_uninstall[@]}"; do
         code --uninstall-extension "${ext}"
       done

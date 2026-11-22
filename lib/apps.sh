@@ -19,25 +19,25 @@ install_app() {
   tmp_dir="$(mktemp -d)"
   mkdir "${tmp_dir}/download" "${tmp_dir}/unpacked"
 
-  local installed=1
+  local ok=false
   if "${fetch_fn}" "${tmp_dir}/download" && unpack_archive "${tmp_dir}/download" "${tmp_dir}/unpacked"; then
     local found
     found="$(find "${tmp_dir}/unpacked" -maxdepth 3 -name "${name}.app" -print -quit)"
     if [[ -n "${found}" ]] && ditto "${found}" "${app_path}"; then
       xattr -dr com.apple.quarantine "${app_path}" 2>/dev/null || true
-      installed=0
+      ok=true
     fi
   fi
 
   hdiutil detach -quiet "${tmp_dir}/unpacked" 2>/dev/null || true
   rm -rf "${tmp_dir}"
 
-  if [[ ${installed} -eq 0 ]]; then
+  if [[ "${ok}" == true ]]; then
     echo "✓ ${name} installed"
-  else
-    echo "Unable to install ${name}"
+    return 0
   fi
-  return "${installed}"
+  echo "Unable to install ${name}"
+  return 1
 }
 
 unpack_archive() {
@@ -73,7 +73,7 @@ fetch_window_management() {
 
 install_window_management() {
   install_app "Window Management+" fetch_window_management || return 0
-  open "/Applications/Window Management+.app"
+  open -a "Window Management+"
   echo "Grant Window Management+ Accessibility access from its menu bar icon"
 }
 
@@ -85,6 +85,6 @@ fetch_ruler() {
 
 install_ruler() {
   install_app "Ruler" fetch_ruler || return 0
-  open "/Applications/Ruler.app"
+  open -a "Ruler"
   echo "Ruler asks for Screen Recording the first time you measure; allow it, then relaunch Ruler"
 }

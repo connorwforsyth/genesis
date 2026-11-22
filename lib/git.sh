@@ -4,6 +4,11 @@ configure_git() {
   git config --global push.autoSetupRemote true
   git config --global core.ignoreCase false
 
+  # Hook Git LFS into git so LFS repos download their large files
+  if command -v git-lfs >/dev/null 2>&1; then
+    git lfs install >/dev/null || echo "Unable to set up Git LFS"
+  fi
+
   if ! command -v gh >/dev/null 2>&1; then
     echo "Skipping git identity; gh is not available"
     return

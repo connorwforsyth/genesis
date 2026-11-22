@@ -23,7 +23,4 @@ install_brew_libs() {
 
     brew install "${tool}"
   done
-
-  # Hook Git LFS into git once so LFS repos download their large files
-  git lfs install >/dev/null
 }
