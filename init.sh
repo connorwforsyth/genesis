@@ -37,6 +37,12 @@ main() {
   install_browser_extensions
 }
 
+# --minimal answers no to every optional prompt and skips Mac App Store apps
+if [[ "${1:-}" == "--minimal" ]]; then
+  export GENESIS_MINIMAL=1
+  shift
+fi
+
 # If you pass function names as args, call those instead of main
 if [[ $# -gt 0 ]]; then
   for cmd in "$@"; do

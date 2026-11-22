@@ -14,6 +14,14 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/connorwforsyth/genesis/m
 
 This downloads the repo to `~/.genesis` and runs it. Running the same command again fetches the latest version. To run individual steps, add them after `--`: `bash -c "$(curl ...)" -- configure_dock`.
 
+For a lean setup, add `--minimal`: it answers no to every optional prompt (Docker, Microsoft apps, DiaTweaks, removing default apps, iCloud Photos) and skips Mac App Store apps:
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/connorwforsyth/genesis/main/bootstrap.sh)" -- --minimal
+```
+
+It works with a clone too (`bash ./init.sh --minimal`) and before step names (`genesis --minimal install_optional_apps`).
+
 Use `bash -c "$(curl ...)"` rather than `curl ... | bash`: piping the script in would stop Genesis's yes/no prompts from reading your answers.
 
 ### From a clone

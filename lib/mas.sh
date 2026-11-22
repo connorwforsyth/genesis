@@ -3,6 +3,11 @@ install_mas_apps() {
     "775737590" # iA Writer
   )
 
+  if [[ -n "${GENESIS_MINIMAL:-}" ]]; then
+    echo "Skipping Mac App Store installs; --minimal"
+    return
+  fi
+
   if ! command -v mas >/dev/null 2>&1; then
     echo "Skipping Mac App Store installs; mas is not available"
     return

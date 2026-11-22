@@ -52,8 +52,13 @@ require_gh_auth() {
   return 1
 }
 
-# Ask a yes/no question; succeeds only on y or Y
+# Ask a yes/no question; succeeds only on y or Y. With --minimal, the answer is always no
 confirm() {
+  if [[ -n "${GENESIS_MINIMAL:-}" ]]; then
+    echo "$1 [y/N] n (--minimal)"
+    return 1
+  fi
+
   local response
   read -r -p "$1 [y/N] " response
   [[ "${response}" =~ ^[Yy]$ ]]
