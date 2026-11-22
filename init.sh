@@ -24,6 +24,7 @@ main() {
   install_dia_tweaks
   install_mas_apps
   uninstall_apps
+  configure_folders
   configure_dock
   configure_zsh "${SCRIPT_DIR}"
   configure_macos
