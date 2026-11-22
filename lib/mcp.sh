@@ -13,7 +13,11 @@ add_mcp_server() {
   case "${agent}:${target}" in
     claude:http*) claude mcp add --scope user --transport http "${name}" "${target}" || ok=false ;;
     claude:*)     claude mcp add --scope user "${name}" -- ${target} || ok=false ;;
-    codex:http*)  codex mcp add "${name}" --url "${target}" || ok=false ;;
+    # `codex mcp add --url` signs in straight away and waits; write the config instead.
+    # Sign in later with `codex mcp login <name>` when you first need it
+    codex:http*)  mkdir -p "$HOME/.codex" \
+                    && printf '\n[mcp_servers.%s]\nurl = "%s"\n' "${name}" "${target}" >> "$HOME/.codex/config.toml" \
+                    || ok=false ;;
     codex:*)      codex mcp add "${name}" -- ${target} || ok=false ;;
   esac
   [[ "${ok}" == true ]] || echo "Unable to add ${name} to ${agent}"
