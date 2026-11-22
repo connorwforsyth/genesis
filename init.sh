@@ -21,6 +21,7 @@ main() {
   install_optional_apps
   install_window_management
   install_pica
+  install_ruler
   install_dia_tweaks
   install_mas_apps
   uninstall_apps

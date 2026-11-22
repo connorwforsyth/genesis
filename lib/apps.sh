@@ -9,7 +9,7 @@ install_app() {
   local name="$1" fetch_fn="$2"
   local app_path="${GENESIS_APPS_DIR:-/Applications}/${name}.app"
 
-  if [[ -d "${app_path}" ]]; then
+  if [[ -d "${app_path}" || -d "$HOME/Applications/${name}.app" ]]; then
     echo "Skipping ${name}; already installed"
     return 1
   fi
@@ -75,4 +75,16 @@ install_window_management() {
   install_app "Window Management+" fetch_window_management || return 0
   open "/Applications/Window Management+.app"
   echo "Grant Window Management+ Accessibility access from its menu bar icon"
+}
+
+# Ruler: screen ruler and annotation tool, from the latest release of a private repo
+fetch_ruler() {
+  require_gh_auth "Ruler" install_ruler || return 1
+  gh release download --repo connorwforsyth/ruler --pattern "*.zip" --dir "$1"
+}
+
+install_ruler() {
+  install_app "Ruler" fetch_ruler || return 0
+  open "/Applications/Ruler.app"
+  echo "Ruler asks for Screen Recording the first time you measure; allow it, then relaunch Ruler"
 }

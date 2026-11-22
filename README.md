@@ -60,6 +60,7 @@ The script is designed to be rerun. It skips installed Homebrew formulae, casks,
 - Copies the personal font library from the private `connorwforsyth/fonts` repo into `~/Library/Fonts` via [`lib/font-library.sh`](lib/font-library.sh) (needs `gh auth login` first)
 - Installs the Homebrew casks listed in [`lib/casks.sh`](lib/casks.sh)
 - Installs Window Management+ from its latest GitHub release via [`lib/apps.sh`](lib/apps.sh) (needs `gh auth login` first, since the repo is private)
+- Installs Ruler, your screen ruler, from its latest GitHub release via [`lib/apps.sh`](lib/apps.sh) (needs `gh auth login` first, since the repo is private)
 - Installs [Pica](https://pica.joshpuckett.me) from its update feed via [`lib/apps.sh`](lib/apps.sh)
 - Offers to install [DiaTweaks](https://github.com/JaceThings/DiaTweaks) for Dia via [`lib/dia-tweaks.sh`](lib/dia-tweaks.sh) (needs `xcode-select --install` first)
 - Installs the Mac App Store apps listed in [`lib/mas.sh`](lib/mas.sh)
