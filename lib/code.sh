@@ -9,6 +9,8 @@ install_vscode_extensions() {
     "esbenp.prettier-vscode"
     "ms-vscode-remote.remote-containers"
     "ms-vscode-remote.remote-ssh"
+    "ms-vscode-remote.remote-ssh-edit" # installed with remote-ssh
+    "ms-vscode.remote-explorer"        # installed with remote-ssh
     "Prisma.prisma"
     "unifiedjs.vscode-mdx"
     "vscode-icons-team.vscode-icons"

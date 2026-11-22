@@ -2,7 +2,8 @@ configure_ghostty() {
   local config_dir="$HOME/.config/ghostty"
   local config_file="${config_dir}/config"
 
-  if ! command -v ghostty >/dev/null 2>&1; then
+  # The Homebrew cask installs the app but no ghostty command, so check for the app
+  if [[ ! -d "/Applications/Ghostty.app" ]]; then
     echo "Skipping Ghostty config; install Ghostty first"
     return
   fi
