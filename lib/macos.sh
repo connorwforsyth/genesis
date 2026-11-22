@@ -47,6 +47,13 @@ configure_macos() {
   # Photos - don't open when an iPhone or camera is plugged in
   defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
+  # iCloud Photos can only be switched off in System Settings, so open it there
+  read -r -p "Keep iCloud Photos off this Mac? Opens iCloud settings to switch Photos off [y/N] " response
+  if [[ "${response}" =~ ^[Yy]$ ]]; then
+    open "x-apple.systempreferences:com.apple.systempreferences.AppleIDSettings:icloud"
+    echo "Turn off Photos in the iCloud settings that just opened (nothing is deleted from iCloud)"
+  fi
+
   # Trackpad and mouse - disable natural scrolling
   defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
