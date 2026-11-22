@@ -2,6 +2,9 @@ configure_zsh() {
   local genesis_dir="${1:-}"
   touch ~/.zprofile ~/.zshrc
 
+  local brew_bin="/opt/homebrew/bin/brew"
+  [[ -x "${brew_bin}" ]] || brew_bin="/usr/local/bin/brew"
+
   # .zprofile
   if grep -q ">>> genesis >>>" ~/.zprofile; then
     sed -i '' '/>>> genesis >>>/,/<<< genesis <<</d' ~/.zprofile
@@ -9,7 +12,7 @@ configure_zsh() {
   cat << EOF >> ~/.zprofile
 # >>> genesis >>>
 # Homebrew (its installer doesn't add this for you)
-eval "\$(/opt/homebrew/bin/brew shellenv)"
+eval "\$(${brew_bin} shellenv)"
 
 # Native installers (Claude Code) put binaries here
 export PATH="\$HOME/.local/bin:\$PATH"

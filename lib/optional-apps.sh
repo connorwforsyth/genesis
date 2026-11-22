@@ -13,8 +13,7 @@ install_optional_group() {
     return
   fi
 
-  read -r -p "${question} [y/N] " response
-  if [[ ! "${response}" =~ ^[Yy]$ ]]; then
+  if ! confirm "${question}"; then
     echo "Skipping ${missing[*]}"
     return
   fi

@@ -26,8 +26,7 @@ uninstall_apps() {
   for app in "${found[@]}"; do
     echo "  - ${app}"
   done
-  read -r -p "Uninstall them? [y/N] " response
-  if [[ ! "${response}" =~ ^[Yy]$ ]]; then
+  if ! confirm "Uninstall them?"; then
     echo "Skipping uninstall"
     return
   fi
@@ -36,11 +35,9 @@ uninstall_apps() {
     sudo rm -rf "/Applications/${app}.app"
   done
 
-  # GarageBand's sound library is several GB on its own
+  # GarageBand's own data. Apple Loops and the Logic folder stay: Logic Pro shares them
   if [[ " ${found[*]} " == *" GarageBand "* ]]; then
-    sudo rm -rf "/Library/Application Support/GarageBand" \
-      "/Library/Application Support/Logic" \
-      "/Library/Audio/Apple Loops"
+    sudo rm -rf "/Library/Application Support/GarageBand"
     rm -rf "$HOME/Library/Application Support/GarageBand"
   fi
 }

@@ -48,10 +48,14 @@ configure_macos() {
   defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
   # iCloud Photos can only be switched off in System Settings, so open it there
-  read -r -p "Keep iCloud Photos off this Mac? Opens iCloud settings to switch Photos off [y/N] " response
-  if [[ "${response}" =~ ^[Yy]$ ]]; then
-    open "x-apple.systempreferences:com.apple.systempreferences.AppleIDSettings:icloud"
-    echo "Turn off Photos in the iCloud settings that just opened (nothing is deleted from iCloud)"
+  # Asked once per Mac; delete ~/.config/genesis/icloud-photos-asked to be asked again
+  local photos_asked="$HOME/.config/genesis/icloud-photos-asked"
+  if [[ ! -f "${photos_asked}" ]]; then
+    if confirm "Keep iCloud Photos off this Mac? Opens iCloud settings to switch Photos off"; then
+      open "x-apple.systempreferences:com.apple.systempreferences.AppleIDSettings:icloud"
+      echo "Turn off Photos in the iCloud settings that just opened (nothing is deleted from iCloud)"
+    fi
+    mkdir -p "$(dirname "${photos_asked}")" && touch "${photos_asked}"
   fi
 
   # Trackpad and mouse - disable natural scrolling

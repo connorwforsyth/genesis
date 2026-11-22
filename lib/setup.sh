@@ -51,3 +51,10 @@ require_gh_auth() {
   echo "Skipping $1; run 'gh auth login' then 'genesis $2'"
   return 1
 }
+
+# Ask a yes/no question; succeeds only on y or Y
+confirm() {
+  local response
+  read -r -p "$1 [y/N] " response
+  [[ "${response}" =~ ^[Yy]$ ]]
+}

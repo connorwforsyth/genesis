@@ -65,7 +65,7 @@ The script is designed to be rerun. It skips installed Homebrew formulae, casks,
 - Offers to install [DiaTweaks](https://github.com/JaceThings/DiaTweaks) for Dia via [`lib/dia-tweaks.sh`](lib/dia-tweaks.sh) (needs `xcode-select --install` first)
 - Installs the Mac App Store apps listed in [`lib/mas.sh`](lib/mas.sh)
 - Asks before installing the large or situational apps in [`lib/optional-apps.sh`](lib/optional-apps.sh): Docker Desktop, and Microsoft work apps (Outlook, Teams, Word, Excel, PowerPoint). Skips the question when they're already installed
-- Offers to uninstall the preinstalled Apple apps listed in [`lib/uninstall.sh`](lib/uninstall.sh): GarageBand (with its sound library), iMovie, Keynote, Numbers and Pages
+- Offers to uninstall the preinstalled Apple apps listed in [`lib/uninstall.sh`](lib/uninstall.sh): GarageBand (with its own data; Apple Loops stay for Logic Pro), iMovie, Keynote, Numbers and Pages
 - Creates `~/Code` for projects outside Conductor and T3 Code via [`lib/folders.sh`](lib/folders.sh)
 - Configures the Dock order listed in [`lib/dock.sh`](lib/dock.sh)
 - Updates `.zprofile` and `.zshrc` using [`lib/zsh.sh`](lib/zsh.sh), adding Homebrew, `~/.local/bin` and the VS Code `code` CLI to `$PATH`, a full-path prompt, `autocd`, case-insensitive tab completion, `BIOME_THREADS=2`, and a `genesis` shell function so you can rerun the script from any terminal

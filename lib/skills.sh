@@ -1,6 +1,7 @@
-# Agent skills, installed globally for Claude Code and Codex.
-# Public skills come from their GitHub sources; the private ones from connorwforsyth/skills.
-install_skill() {
+# Agent skills, installed globally for Claude Code and Codex with the skills CLI
+# (npx skills). Public skills come from their GitHub sources; private ones from
+# connorwforsyth/skills. Reruns only add skills that aren't installed yet.
+add_skills() {
   local source="$1"
   shift
 
@@ -9,42 +10,52 @@ install_skill() {
 }
 
 install_skills() {
+  # Each entry is source|skill names
+  local skill_sources=(
+    "benjitaylor/agentation|agentation agentation-self-driving"
+    "brianlovin/claude-config|simplify"
+    "emilkowalski/skill|animate animate-expo animation-vocabulary apple-design ask-sonner emil-design-eng find-animation-opportunities improve-animations pick-ui-library review-animations write-swift"
+    "haydenbleasel/ultracite|ultracite"
+    "humanlayer/skills|show-me"
+    "jimliu/baoyu-skills|baoyu-diagram"
+    "mattpocock/skills|ask-matt chief-of-staff claude-handoff code-review codebase-design diagnosing-bugs domain-modeling git-guardrails-claude-code grill-me grill-with-docs grilling handoff implement implement-spec improve-codebase-architecture loop-me migrate-to-shoehorn pr prototype research retro scaffold-exercises setup-matt-pocock-skills setup-pre-commit setup-ts-deep-modules tdd teach to-questionnaire to-spec to-tickets triage wait-what wayfinder wizard writing-beats writing-for-agents writing-fragments writing-shape"
+    "posthog/posthog-for-claude|posthog-instrumentation"
+    "remotion-dev/skills|remotion-best-practices"
+    "shadcn-ui/ui|migrate-radix-to-base shadcn"
+    "shadcn/improve|improve"
+    "vercel-labs/agent-skills|vercel-react-best-practices"
+    "vercel-labs/skills|find-skills"
+  )
+
   if ! command -v npx >/dev/null 2>&1; then
     echo "Skipping skills; npx is not available"
     return
   fi
 
   echo "Installing agent skills..."
-  install_skill "benjitaylor/agentation" -s agentation -s agentation-self-driving
-  install_skill "brianlovin/claude-config" -s simplify
-  install_skill "emilkowalski/skill" -s animate -s animate-expo -s animation-vocabulary \
-    -s apple-design -s ask-sonner -s emil-design-eng -s find-animation-opportunities \
-    -s improve-animations -s pick-ui-library -s review-animations -s write-swift
-  install_skill "haydenbleasel/ultracite" -s ultracite
-  install_skill "humanlayer/skills" -s show-me
-  install_skill "jimliu/baoyu-skills" -s baoyu-diagram
-  install_skill "mattpocock/skills" -s ask-matt -s chief-of-staff -s claude-handoff \
-    -s code-review -s codebase-design -s diagnosing-bugs -s domain-modeling \
-    -s git-guardrails-claude-code -s grill-me -s grill-with-docs -s grilling -s handoff \
-    -s implement -s implement-spec -s improve-codebase-architecture -s loop-me \
-    -s migrate-to-shoehorn -s pr -s prototype -s research -s retro -s scaffold-exercises \
-    -s setup-matt-pocock-skills -s setup-pre-commit -s setup-ts-deep-modules -s tdd \
-    -s teach -s to-questionnaire -s to-spec -s to-tickets -s triage -s wait-what \
-    -s wayfinder -s wizard -s writing-beats -s writing-for-agents -s writing-fragments \
-    -s writing-shape
-  install_skill "posthog/posthog-for-claude" -s posthog-instrumentation
-  install_skill "remotion-dev/skills" -s remotion-best-practices
-  install_skill "shadcn-ui/ui" -s migrate-radix-to-base -s shadcn
-  install_skill "shadcn/improve" -s improve
-  install_skill "vercel-labs/agent-skills" -s vercel-react-best-practices
-  install_skill "vercel-labs/skills" -s find-skills
+  local entry source skill
+  for entry in "${skill_sources[@]}"; do
+    source="${entry%%|*}"
+
+    local args=()
+    for skill in ${entry#*|}; do
+      [[ -d "$HOME/.agents/skills/${skill}" ]] || args+=(-s "${skill}")
+    done
+
+    if [[ ${#args[@]} -eq 0 ]]; then
+      echo "Skipping ${source}; skills already installed"
+      continue
+    fi
+
+    add_skills "${source}" "${args[@]}"
+  done
 
   require_gh_auth "private skills" install_skills || return 0
 
   local tmp_dir
   tmp_dir="$(mktemp -d)"
   if gh repo clone connorwforsyth/skills "${tmp_dir}/skills" -- --depth 1 --quiet; then
-    install_skill "${tmp_dir}/skills" -s '*' --copy
+    add_skills "${tmp_dir}/skills" -s '*' --copy
   else
     echo "Unable to clone connorwforsyth/skills"
   fi
