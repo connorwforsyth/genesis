@@ -12,13 +12,23 @@ main() {
   ensure_macos
   ensure_homebrew
   setup_nvm
+  install_npm_packages
   install_brew_libs
+  configure_git
   install_fonts
+  install_font_library
   install_brew_casks
+  install_optional_apps
+  install_window_management
+  install_pica
+  install_dia_tweaks
   install_mas_apps
+  uninstall_apps
   configure_dock
   configure_zsh "${SCRIPT_DIR}"
   configure_macos
+  configure_mcp
+  install_skills
   install_vscode_extensions
   configure_vscode_settings
   configure_ghostty

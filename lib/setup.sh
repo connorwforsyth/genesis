@@ -41,3 +41,13 @@ ensure_homebrew() {
   export BREW_PREFIX
   BREW_PREFIX="$(brew --prefix)"
 }
+
+# Steps that read private GitHub repos call this first; configure_git signs in earlier in the run
+require_gh_auth() {
+  if gh auth status >/dev/null 2>&1; then
+    return 0
+  fi
+
+  echo "Skipping $1; run 'gh auth login' then 'genesis $2'"
+  return 1
+}

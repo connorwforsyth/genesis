@@ -1,12 +1,18 @@
 install_brew_libs() {
   local brew_libs=(
+    "btop"
     "dockutil"
+    "duti"
+    "ffmpeg"
     "gh"
+    "git-lfs"
     "mas"
-    "anomalyco/tap/opencode"
+    "mole"
     "oven-sh/bun/bun"
-    "8ta4/extension/extension"
   )
+
+  # Homebrew only installs from third-party taps you've trusted
+  brew trust --tap oven-sh/bun >/dev/null 2>&1 || true
 
   local tool
   for tool in "${brew_libs[@]}"; do
@@ -17,4 +23,7 @@ install_brew_libs() {
 
     brew install "${tool}"
   done
+
+  # Hook Git LFS into git once so LFS repos download their large files
+  git lfs install >/dev/null
 }

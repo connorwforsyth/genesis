@@ -2,10 +2,9 @@ configure_dock() {
   local dock_items=(
     "/Applications/Microsoft Outlook.app"
     "/Applications/Microsoft Teams.app"
-    "/Applications/Arc.app"
+    "/Applications/Dia.app"
     "/Applications/Ghostty.app"
     "/Applications/Visual Studio Code.app"
-    "/Applications/GitHub Desktop.app"
     "/Applications/Figma.app"
     "/Applications/IA Writer.app"
   )
@@ -28,5 +27,5 @@ configure_dock() {
     dockutil --add "${app_path}" --no-restart
   done
 
-  killall Dock
+  killall Dock >/dev/null 2>&1 || true
 }

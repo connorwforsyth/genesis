@@ -19,5 +19,12 @@ cursor-style = bar
 cursor-style-blink = true
 EOF
 
+  # macOS has no single "default terminal" setting; this makes Ghostty open
+  # shell scripts and executables you double-click in Finder
+  if command -v duti >/dev/null 2>&1; then
+    duti -s com.mitchellh.ghostty com.apple.terminal.shell-script all 2>/dev/null || true
+    duti -s com.mitchellh.ghostty public.unix-executable all 2>/dev/null || true
+  fi
+
   echo "✓ Ghostty configured"
 }

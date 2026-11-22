@@ -1,17 +1,22 @@
 install_brew_casks() {
   local brew_casks=(
-    "arc"
     "cleanshot"
     "pixelsnap"
     "figma"
     "visual-studio-code"
-    "github"
-    "notion"
     "screen-studio"
     "slack"
     "spotify"
     "raycast"
     "ghostty"
+    "t3-code"
+    "conductor"
+    "codex"
+    "chatgpt"
+    "claude"
+    "claude-code"
+    "thebrowsercompany-dia"
+    "tailscale-app"
   )
 
   local cask

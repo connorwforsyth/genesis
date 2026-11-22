@@ -11,18 +11,44 @@ configure_macos() {
   defaults write com.apple.finder ShowStatusBar -bool true
   defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
+  # Dock - minimize windows into their app icon
+  defaults write com.apple.dock minimize-to-application -bool true
+
+  # Don't write .DS_Store files on network or USB volumes
+  defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+  defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
   # Spotlight - hide from menu bar and disable shortcuts
   defaults -currentHost write com.apple.Spotlight MenuItemHidden -int 1
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 \
     "{ enabled = 0; value = { parameters = (65535, 65535, 0); type = standard; }; }"
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 \
     "{ enabled = 0; value = { parameters = (65535, 65535, 0); type = standard; }; }"
+  # Apply the shortcut change now instead of after logging out
+  /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u \
+    >/dev/null 2>&1 || true
 
-  # Trackpad - disable natural scrolling
+  # Desktop - hide widgets (Stage Manager too)
+  defaults write com.apple.WindowManager StandardHideWidgets -bool true
+  defaults write com.apple.WindowManager StageManagerHideWidgets -bool true
+
+  # Wallpaper - Raycast's "Glaze 2"
+  local wallpaper="$HOME/Pictures/Wallpapers/glaze_2.heic"
+  if [[ ! -f "${wallpaper}" ]]; then
+    mkdir -p "$(dirname "${wallpaper}")"
+    curl -fsSL https://misc-assets.raycast.com/wallpapers/glaze_2.heic -o "${wallpaper}" \
+      || rm -f "${wallpaper}"
+  fi
+  if [[ -f "${wallpaper}" ]]; then
+    osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"${wallpaper}\"" \
+      >/dev/null 2>&1 || echo "Unable to set wallpaper; set it from ${wallpaper}"
+  fi
+
+  # Trackpad and mouse - disable natural scrolling
   defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
   # Apply changes
-  killall Dock
-  killall Finder
-  killall SystemUIServer
+  killall Dock >/dev/null 2>&1 || true
+  killall Finder >/dev/null 2>&1 || true
+  killall SystemUIServer >/dev/null 2>&1 || true
 }
